@@ -1,4 +1,11 @@
 # Sudoku
+I started this project years ago with three main goals. Those goals remain with slight alterations...
+
+1. **Assist in solving the hardest Sudoku Puzzels.** Initially the "hardest" Sudoku Puzzels where the ones found on websites like [sudoku.com](https://sudoku.com/extreme/). Now they are the ones seen in Sudoku Compititions or on [Logic Masters Germany](https://logic-masters.de/Raetselportal/index.php). Additionaly, to truly assist in solving (not just solve), a simple, but effective, Backtracking Algorithm would not survice, to trully assist it must know techniques real humans use to solve Sudoku to be able to give out useful hints and explain why it did what it did.
+
+2. **Assist in creating Sudoku Puzzels.**
+
+3. **Explore and experiment with different/new technogies.** Originally, I used this as a means to learn SwiftUI.
 
 ## Task List
 - [ ] Terminolgy
@@ -17,7 +24,7 @@
    1. [Terminology](#terminology)
    2. Variations
 3. [Solving a Sudoku](#solving-a-sudoku)
-4. [Generating a Sudoku](#generating-a-sudoku)
+4. [Creating a Sudoku]([#creating-a-sudoku))
 5. [Benchmarks](#benchmarks)
 
 ## What is Sudoku?
@@ -213,7 +220,7 @@ A sub-grid in the Sudoku Grid. In _Classic Sudoku_ there are nine 3 × 3 regions
 
 ### The Artificial Intelligence Way
 
-## Generating a Sudoku
+## Creating a Sudoku
 
 ## Exploring and Solving for different Variations
 
