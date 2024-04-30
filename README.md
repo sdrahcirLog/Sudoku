@@ -18,24 +18,40 @@ I started this project years ago with three main goals. Those goals remain with 
     - [ ] Examples
     - [ ] Links to Variations when refrenced
 - [ ] Replace Unicode Sudoku with Images
+- [ ] Solving
+    - [ ] Human
+    - [ ] Mathematical
+    - [ ] AI
+- [ ] Creating
 
 ## Table of Contents
 1. [What is Sudoku?](#what-is-sudoku)
-   1. [Terminology](#terminology)
-   2. Variations
+   1. [Rules](#rules)
+   2. [Terminology](#terminology)
+   3. [Variations](#variations)
+       1. [By Grid Size](#by-grid-size)
+       2. [By Region Shape](#by-region-shape)
+       3. [By Adding Extra Constraints](#by-adding-extra-constraints)
 3. [Solving a Sudoku](#solving-a-sudoku)
-4. [Creating a Sudoku]([#creating-a-sudoku))
-5. [Benchmarks](#benchmarks)
+    1. [The Human Way](#the-human-way)
+    2. [The Mathematical Way](#the-mathematical-way)
+    3. [The Artificial Intelligence Way](#the-artificial-intelligence-way)
+4. [Creating a Sudoku]([#creating-a-sudoku)
+5. [Exploring and Solving for Different Variations](#exploring-and-solving-for-different-variations)
+6. [Benchmarks](#benchmarks)
 
 ## What is Sudoku?
+### Rules
+
 ### Terminology
 ###### Element
-A digit, number, character, or symbol used to fill in the **cells** of the Sudoku. In Classic Sudoku the number 7, for example, would be considered an element.
+A digit, number, character, or symbol used to fill in the [cells](#cell) of the Sudoku. In _Classic Sudoku_ the number 7, for example, would be considered an element.
 
 ###### Element Set
+All [elements](#element) used in the Sudoku. In _Classic Sudoku_ the element set is the numbers 1-9.
 
-###### Cell
-An individual Square on the Sudoku Grid. In _Classic Sudoku_ there are 81 cells.
+###### Cell, Square {#cell}
+An individual square on the Sudoku Grid. In _Classic Sudoku_ there are 81 cells.
 ```
 ╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗
 ║ * │   │   ║   │   │   ║   │   │   ║
@@ -59,7 +75,7 @@ An individual Square on the Sudoku Grid. In _Classic Sudoku_ there are 81 cells.
 ```
 
 ###### Row
-An individual row on the Sudoku Grid. In _Classic Sudoku_ there are 9 rows.
+An consecutive line of horizontal [cells](#cell) on the Sudoku Grid. In _Classic Sudoku_ there are 9 rows.
 ```
 ╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗
 ║ * │ * │ * ║ * │ * │ * ║ * │ * │ * ║
@@ -83,7 +99,7 @@ An individual row on the Sudoku Grid. In _Classic Sudoku_ there are 9 rows.
 ```
 
 ###### Column
-An individual column on the Sudoku Grid. In _Classic Sudoku_ there are 9 columns.
+An consecutive line of vertical [cells](#cell) on the Sudoku Grid. In _Classic Sudoku_ there are 9 columns.
 ```
 ╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗
 ║ * │   │   ║   │   │   ║   │   │   ║
@@ -106,8 +122,8 @@ An individual column on the Sudoku Grid. In _Classic Sudoku_ there are 9 columns
 ╚═══╧═══╧═══╩═══╧═══╧═══╩═══╧═══╧═══╝
 ```
 
-###### Regions (Also called _Boxes_ or _Blocks_)
-A sub-grid in the Sudoku Grid. In _Classic Sudoku_ there are nine 3 × 3 regions.
+###### Region, Box, Block, Nonet {#region}
+A sub-grid in the [grid](#grid). In _Classic Sudoku_ there are nine 3×3 regions.
 ```
 ╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗
 ║ * │ * │ * ║   │   │   ║   │   │   ║
@@ -127,10 +143,59 @@ A sub-grid in the Sudoku Grid. In _Classic Sudoku_ there are nine 3 × 3 regions
 ║   │   │   ║   │   │   ║   │   │   ║
 ╟───┼───┼───╫───┼───┼───╫───┼───┼───╢
 ║   │   │   ║   │   │   ║   │   │   ║
+╚═══╧═══╧═══╩═══╧═══╧═══╩═══╧═══╧═══╝
+```
+
+###### Band
+Horizontally aligned [regions](#region). In _Classic Sudoku_ there are three bands.
+```
+╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗
+║ * │ * │ * ║ * │ * │ * ║ * │ * │ * ║
+╟───┼───┼───╫───┼───┼───╫───┼───┼───╢
+║ * │ * │ * ║ * │ * │ * ║ * │ * │ * ║
+╟───┼───┼───╫───┼───┼───╫───┼───┼───╢
+║ * │ * │ * ║ * │ * │ * ║ * │ * │ * ║
+╠═══╪═══╪═══╬═══╪═══╪═══╬═══╪═══╪═══╣
+║   │   │   ║   │   │   ║   │   │   ║
+╟───┼───┼───╫───┼───┼───╫───┼───┼───╢
+║   │   │   ║   │   │   ║   │   │   ║
+╟───┼───┼───╫───┼───┼───╫───┼───┼───╢
+║   │   │   ║   │   │   ║   │   │   ║
+╠═══╪═══╪═══╬═══╪═══╪═══╬═══╪═══╪═══╣
+║   │   │   ║   │   │   ║   │   │   ║
+╟───┼───┼───╫───┼───┼───╫───┼───┼───╢
+║   │   │   ║   │   │   ║   │   │   ║
+╟───┼───┼───╫───┼───┼───╫───┼───┼───╢
+║   │   │   ║   │   │   ║   │   │   ║
+╚═══╧═══╧═══╩═══╧═══╧═══╩═══╧═══╧═══╝
+```
+
+###### Stack
+Vertically aligned [regions](#region). In _Classic Sudoku_ there are three stacks.
+```
+╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗
+║ * │ * │ * ║   │   │   ║   │   │   ║
+╟───┼───┼───╫───┼───┼───╫───┼───┼───╢
+║ * │ * │ * ║   │   │   ║   │   │   ║
+╟───┼───┼───╫───┼───┼───╫───┼───┼───╢
+║ * │ * │ * ║   │   │   ║   │   │   ║
+╠═══╪═══╪═══╬═══╪═══╪═══╬═══╪═══╪═══╣
+║ * │ * │ * ║   │   │   ║   │   │   ║
+╟───┼───┼───╫───┼───┼───╫───┼───┼───╢
+║ * │ * │ * ║   │   │   ║   │   │   ║
+╟───┼───┼───╫───┼───┼───╫───┼───┼───╢
+║ * │ * │ * ║   │   │   ║   │   │   ║
+╠═══╪═══╪═══╬═══╪═══╪═══╬═══╪═══╪═══╣
+║ * │ * │ * ║   │   │   ║   │   │   ║
+╟───┼───┼───╫───┼───┼───╫───┼───┼───╢
+║ * │ * │ * ║   │   │   ║   │   │   ║
+╟───┼───┼───╫───┼───┼───╫───┼───┼───╢
+║ * │ * │ * ║   │   │   ║   │   │   ║
 ╚═══╧═══╧═══╩═══╧═══╧═══╩═══╧═══╧═══╝
 ```
 
 ###### Grid
+The entirty of the the puzzle. In _Classic Sudoku_ there is one 9×9 grid.
 ```
 ╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗
 ║ * │ * │ * ║ * │ * │ * ║ * │ * │ * ║
@@ -152,6 +217,11 @@ A sub-grid in the Sudoku Grid. In _Classic Sudoku_ there are nine 3 × 3 regions
 ║ * │ * │ * ║ * │ * │ * ║ * │ * │ * ║
 ╚═══╧═══╧═══╩═══╧═══╧═══╩═══╧═══╧═══╝
 ```
+
+###### Clue, Given {#clue}
+The initially defined values.
+
+###### Group
 
 ###### Polyomino Boxes
 - Pentomino (5)
