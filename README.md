@@ -45,13 +45,14 @@ I started this project years ago with three main goals. Those goals remain with 
 
 ### Terminology
 ###### Element
-A digit, number, character, or symbol used to fill in the [cells](#cell) of the Sudoku. In _Classic Sudoku_ the number 7, for example, would be considered an element.
+A digit, number, character, or symbol used to fill in the [cells](#cell-square) of the Sudoku. In _Classic Sudoku_ the number 7, for example, would be considered an element.
 
 ###### Element Set
 All [elements](#element) used in the Sudoku. In _Classic Sudoku_ the element set is the numbers 1-9.
 
-###### Cell, Square {#cell}
+###### Cell, Square
 An individual square on the Sudoku Grid. In _Classic Sudoku_ there are 81 cells.
+
 ```
 ╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗
 ║ * │   │   ║   │   │   ║   │   │   ║
@@ -75,7 +76,7 @@ An individual square on the Sudoku Grid. In _Classic Sudoku_ there are 81 cells.
 ```
 
 ###### Row
-An consecutive line of horizontal [cells](#cell) on the Sudoku Grid. In _Classic Sudoku_ there are 9 rows.
+An consecutive line of horizontal [cells](#cell-square) on the Sudoku Grid. In _Classic Sudoku_ there are 9 rows.
 ```
 ╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗
 ║ * │ * │ * ║ * │ * │ * ║ * │ * │ * ║
@@ -99,7 +100,7 @@ An consecutive line of horizontal [cells](#cell) on the Sudoku Grid. In _Classic
 ```
 
 ###### Column
-An consecutive line of vertical [cells](#cell) on the Sudoku Grid. In _Classic Sudoku_ there are 9 columns.
+An consecutive line of vertical [cells](#cell-square) on the Sudoku Grid. In _Classic Sudoku_ there are 9 columns.
 ```
 ╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗
 ║ * │   │   ║   │   │   ║   │   │   ║
@@ -122,7 +123,7 @@ An consecutive line of vertical [cells](#cell) on the Sudoku Grid. In _Classic S
 ╚═══╧═══╧═══╩═══╧═══╧═══╩═══╧═══╧═══╝
 ```
 
-###### Region, Box, Block, Nonet {#region}
+###### Region, Box, Block, Nonet
 A sub-grid in the [grid](#grid). In _Classic Sudoku_ there are nine 3×3 regions.
 ```
 ╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗
@@ -147,7 +148,7 @@ A sub-grid in the [grid](#grid). In _Classic Sudoku_ there are nine 3×3 regions
 ```
 
 ###### Band
-Horizontally aligned [regions](#region). In _Classic Sudoku_ there are three bands.
+Horizontally aligned [regions](#region-box-block-nonet). In _Classic Sudoku_ there are three bands.
 ```
 ╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗
 ║ * │ * │ * ║ * │ * │ * ║ * │ * │ * ║
@@ -171,7 +172,7 @@ Horizontally aligned [regions](#region). In _Classic Sudoku_ there are three ban
 ```
 
 ###### Stack
-Vertically aligned [regions](#region). In _Classic Sudoku_ there are three stacks.
+Vertically aligned [regions](#region-box-block-nonet). In _Classic Sudoku_ there are three stacks.
 ```
 ╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗
 ║ * │ * │ * ║   │   │   ║   │   │   ║
@@ -223,10 +224,23 @@ The initially defined values.
 
 ###### Group
 
-###### Polyomino Boxes
-- Pentomino (5)
-- Heptomino (7)
-- Nonomino (9)
+###### Polyomino Region
+A shape formed by joining one or more [cells](#cell-square) edge to edge.
+
+| $n$ | Name        |
+| --- | ----------- |
+|   1 | Monomino    |
+|   2 | Domino      |
+|   3 | Tromino     |
+|   4 | Tetromino   |
+|   5 | Pentomino   |
+|   6 | Hexomino    |
+|   7 | Heptomino   |
+|   8 | Octomino    |
+|   9 | Nonomino    |
+|  10 | Decomino    |
+|  11 | Undecomino  |
+|  12 | Dodecomino  |
 
 ### Variations
 #### By Grid Size
